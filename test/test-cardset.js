@@ -65,5 +65,8 @@ vows.describe('CardSet').addBatch({
 		'Add duplicate card': function() {
 			assert.deepEqual(CardSet('2c').add('2c').cards, [Card('2c')]);
 		},
+		'Multiple card exclusion': function() {
+			assert.deepEqual(CardSet('2c 3d 4h 5s').add('2c 3d 4h 5s').cards, [Card('2c'), Card('3d'), Card('4h'), Card('5s')]);
+		}
 	}
 }).run();
