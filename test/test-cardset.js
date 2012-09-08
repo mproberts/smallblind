@@ -58,7 +58,7 @@ vows.describe('CardSet').addBatch({
 		},
 	},
 
-	'Card exclusion': {
+	'Add Operations': {
 		'Add unique card': function() {
 			assert.deepEqual(CardSet('2c').add('3c').cards, [Card('2c'), Card('3c')]);
 		},
@@ -70,7 +70,65 @@ vows.describe('CardSet').addBatch({
 		}
 	},
 
+	'Remove Operations': {
+		'Remove existing card': function() {
+			assert.deepEqual(CardSet('2c 3c').remove('3c').cards, [Card('2c')]);
+		},
+		'Remove missing card': function() {
+			assert.deepEqual(CardSet('2c 3c').remove('4c').cards, [Card('2c'), Card('3c')]);
+		},
+	},
+
+	'Index Of': {
+		'Index for existing card': function() {
+			assert.equal(CardSet('2c 3c').indexOf('3c'), 1);
+		},
+		'Index for missing card': function() {
+			assert.equal(CardSet('2c 3c').indexOf('4c'), -1);
+		},
+	},
+
+	'Equivalence': {
+		'Matching': function() {
+			assert.isTrue(CardSet('4c 5c 6c').isEquivalent(CardSet('5c 6c 4c')));
+		},
+		'Not matching': function() {
+			assert.isFalse(CardSet('10d 5c 6c').isEquivalent(CardSet('5c 6c 4c')));
+		},
+		'Subset ': function() {
+			assert.isFalse(CardSet('4c 5c 6c').isEquivalent(CardSet('5c 6c')));
+		},
+		'Shuffled': function() {
+			assert.isTrue(CardSet.fullDeck().isEquivalent(CardSet.random(52)));
+		},
+	},
+
 	'Subsets': {
+		'Front-half': function() {
+			assert.equal('Qh Jd', CardSet('Qh Jd Ks Ac').subset(0, 2).toString());
+		},
+		'Rear-half': function() {
+			assert.equal('Ks Ac', CardSet('Qh Jd Ks Ac').subset(2, 4).toString());
+		},
+		'Rear-half without end point': function() {
+			assert.equal('Ks Ac', CardSet('Qh Jd Ks Ac').subset(2).toString());
+		},
+	},
+
+	'Random': {
+		'Too many cards': function() {
+			CardSet.random.bind(CardSet, 53).should.throwError(/^Maximum/);
+		},
+		'Full shuffled deck': function() {
+			var deck = CardSet.random(52);
+
+			assert.equal(52, deck.cards.length);
+		},
+		'Full subset of deck': function() {
+			var deck = CardSet.random(7);
+
+			assert.equal(7, deck.cards.length);
+		},
 	},
 
 	'Helpers': {
