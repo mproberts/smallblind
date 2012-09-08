@@ -1,0 +1,20 @@
+{
+  "name": "node-smallblind",
+  "version": "0.0.1",
+  "description": "A light-weight poker library for NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mproberts/node-smallblind.git"
+  },
+  "keywords": [
+    "poker",
+    "cards",
+    "evaluator"
+  ],
+  "author": "Mike Roberts <mike@kik.com>",
+  "license": "MIT"
+}
