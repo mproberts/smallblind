@@ -143,5 +143,36 @@ vows.describe('CardSet').addBatch({
 
 			assert.deepEqual(deck, reference);
 		},
+		'Bit string length': function() {
+			assert.equal(CardSet.random(52).toBitString().length, 64);
+		},
+		'Bit string empty': function() {
+			var string = CardSet().toBitString();
+			var bits = string.split('');
+			var ones = 0;
+
+			for (var i in bits) {
+				if (bits[i] === '1') {
+					++ones;
+				}
+			}
+
+			assert.equal(string.length, 64);
+			assert.equal(ones, 0);
+		},
+		'Bit string full': function() {
+			var string = CardSet.random(52).toBitString();
+			var bits = string.split('');
+			var ones = 0;
+
+			for (var i in bits) {
+				if (bits[i] === '1') {
+					++ones;
+				}
+			}
+
+			assert.equal(string.length, 64);
+			assert.equal(ones, 52);
+		},
 	},
 }).run();
