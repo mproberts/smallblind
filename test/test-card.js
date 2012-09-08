@@ -21,6 +21,9 @@ vows.describe('Card').addBatch({
 		'Invalid range for suit': function() {
 			Card.bind({}, 1, 5).should.throwError(/^Invalid/);
 		},
+		'Constructor as a function': function() {
+			assert.isTrue(Card('2c') instanceof Card);
+		}
 	},
 
 	'Parsing': {
