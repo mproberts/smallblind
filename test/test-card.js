@@ -64,7 +64,7 @@ vows.describe('Card').addBatch({
 			assert.equal(Card('10d').toString(), '10d');
 		},
 		'Pretty-printing': function() {
-			assert.equal(Card('6d').prettyString(), '6\u2666');
+			assert.equal(Card('6s').prettyString(), '6\u2660');
 		}
 	},
 }).run();

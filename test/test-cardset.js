@@ -58,6 +58,13 @@ vows.describe('CardSet').addBatch({
 		},
 	},
 
+	'Copying': {
+		'Basic copy': function() {
+			var cardset = CardSet('2h 3s 4c kd');
+			assert.deepEqual(cardset.copy(), cardset);
+		},
+	},
+
 	'Add Operations': {
 		'Add unique card': function() {
 			assert.deepEqual(CardSet('2c').add('3c').cards, [Card('2c'), Card('3c')]);

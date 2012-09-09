@@ -36,18 +36,11 @@ function randomHands(count, handSize) {
 	return hands;
 }
 
-var hands = randomHands(10000, 7);
+var hands;
+
+measure(function generateHands(hand){
+	hands = randomHands(10000, 7);
+});
 
 measure(function checkPairsPrimes(hand){
-	for (var i = 2; i < 15; ++i) {
-		var prime = Card.RankPrimes[i];
-		var check = prime * prime;
-
-		for (var j = 2; j <= 4; ++j) {
-			check *= prime;
-
-			if (hand.rankPrimes % check === 0) {
-			}
-		}
-	}
 }, hands);
