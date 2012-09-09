@@ -42,5 +42,43 @@ measure(function generateHands(hand){
 	hands = randomHands(10000, 7);
 });
 
-measure(function checkPairsPrimes(hand){
+var ranks = [];
+var suits = [];
+
+for (var i = 1; i <= 14; ++i) {
+	ranks[i] = {rank: i, count: 0, cards: []};
+}
+
+for (var i = 0; i < 4; ++i) {
+	suits[i] = {suit: i, count: 0, cards: []};
+}
+
+measure(function histograms(hand){
+	var cards = hand.cards;
+
+	// ace-to-ace
+	for (var i = 1; i <= 14; ++i) {
+		ranks[i].cards = [];
+		ranks[i].count = 0;
+	}
+	
+	for (var i = 0; i < 4; ++i) {
+		suits[i].cards = [];
+		suits[i].count = 0;
+	}
+	
+	for (var i = 0, l = cards.length; i < l; ++i) {
+		var card = cards[i];
+		var r = card.rank;
+		var s = card.suit;
+
+		++ranks[r].count;
+		ranks[r].cards.push(i);
+
+		++suits[s].count;
+		suits[s].cards.push(i);
+	}
+
+	// fancy high-low ace
+	ranks[1] = ranks[14];
 }, hands);
