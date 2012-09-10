@@ -107,4 +107,4 @@ vows.describe('Evaluator').addBatch({
 		},
 	},
 
-}).run();
+}).export(module);

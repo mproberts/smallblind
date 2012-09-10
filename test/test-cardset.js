@@ -182,4 +182,4 @@ vows.describe('CardSet').addBatch({
 			assert.equal(ones, 52);
 		},
 	},
-}).run();
+}).export(module);

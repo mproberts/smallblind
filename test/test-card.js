@@ -67,4 +67,4 @@ vows.describe('Card').addBatch({
 			assert.equal(Card('6s').prettyString(), '6\u2660');
 		}
 	},
-}).run();
+}).export(module);
