@@ -1,5 +1,8 @@
 var Card    = require('../lib/card'),
-    CardSet = require('../lib/cardset');
+    CardSet = require('../lib/cardset'),
+    Evaluator = require('../lib/naive-evaluator');
+
+var HAND_COUNT = 20000;
 
 function measure(fn, samples) {
 	var start = process.hrtime(), end;
@@ -19,7 +22,7 @@ function measure(fn, samples) {
 
 	var diff = secs + (nanos / 1000000000.0);
 
-	console.log(fn.name + ': ' + diff);
+	return diff;
 }
 
 function randomHands(count, handSize) {
@@ -36,49 +39,55 @@ function randomHands(count, handSize) {
 	return hands;
 }
 
-var hands;
+var hands, time, results = Evaluator.measurements;
 
-measure(function generateHands(hand){
-	hands = randomHands(10000, 7);
+// generate
+console.log('Generating ' + HAND_COUNT + ' hands...');
+
+time = measure(function generateHands(hand){
+	hands = randomHands(HAND_COUNT, 7);
 });
 
-var ranks = [];
-var suits = [];
+console.log('Took ' + Math.round(time*1000)/1000 + ' seconds\n');
 
-for (var i = 1; i <= 14; ++i) {
-	ranks[i] = {rank: i, count: 0, cards: []};
-}
+// evaluate
+console.log('Evaluating ' + HAND_COUNT + ' hands...');
 
-for (var i = 0; i < 4; ++i) {
-	suits[i] = {suit: i, count: 0, cards: []};
-}
-
-measure(function histograms(hand){
-	var cards = hand.cards;
-
-	// ace-to-ace
-	for (var i = 1; i <= 14; ++i) {
-		ranks[i].cards = [];
-		ranks[i].count = 0;
-	}
-	
-	for (var i = 0; i < 4; ++i) {
-		suits[i].cards = [];
-		suits[i].count = 0;
-	}
-	
-	for (var i = 0, l = cards.length; i < l; ++i) {
-		var card = cards[i];
-		var r = card.rank;
-		var s = card.suit;
-
-		++ranks[r].count;
-		ranks[r].cards.push(i);
-
-		++suits[s].count;
-		suits[s].cards.push(i);
-	}
-
-	// fancy high-low ace
-	ranks[1] = ranks[14];
+time = measure(function evaluate(hand) {
+	var value = Evaluator.evaluate(hand);
 }, hands);
+
+console.log('Took ' + Math.round(time*1000)/1000 + ' seconds, ~' + Math.round(HAND_COUNT / time) + ' hands per second\n');
+
+if (results) {
+	// print times
+	console.log('Method\t\tCalls\tTotal (ms)\tAvg (ms)');
+	console.log('--------------------------------------------------');
+
+	for (var name in results) {
+		if (!results.hasOwnProperty(name)) {
+			continue;
+		}
+
+		var times = results[name];
+
+		var min = 1000000;
+		var max = 0;
+		var avg = 0;
+		var total = 0;
+
+		for (var i in times) {
+			var t = times[i];
+
+			min = Math.min(min, t);
+			max = Math.max(max, t);
+			total += t;
+		}
+
+		avg = times.length === 0 ? 0 : total / times.length;
+		total = Math.round(total * 1000000) / 1000;
+		avg = Math.round(avg * 10000000) / 10000;
+
+		console.log(name + '\t' + times.length + '\t' + total + '\t\t' + avg);
+	}
+}
