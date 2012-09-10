@@ -1,18 +1,4 @@
-# JavaScript Poker Library for Node.JS
+## smallblind
+### A poker library for NodeJS
 
-A NodeJS library for playing Poker including gameplay mechanics, hand evaluation and more.
-
-## Installation
-
-  Install with the Node.JS package manager [npm](http://npmjs.org/):
-
-      $ npm install smallblind
-
-or
-
-  Install via git clone:
-
-      $ git clone git://github.com/mproberts/node-smallblind.git
-      $ cd node-smallblind
-      $ npm install
-
+This library provides card handling, hand evaluation, table logic, betting rules, and more.
