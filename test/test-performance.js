@@ -57,7 +57,10 @@ time = measure(function evaluate(hand) {
 	var value = Evaluator.evaluate(hand);
 }, hands);
 
-console.log('Took ' + Math.round(time*1000)/1000 + ' seconds, ~' + Math.round(HAND_COUNT / time) + ' hands per second\n');
+console.log('Took ' + Math.round(time*1000)/1000 + ' seconds\n');
+
+console.log(Math.round(HAND_COUNT / time) + ' hands per second');
+console.log(Math.round(1000000000 * time / HAND_COUNT)/1000 + 'ns per hand\n');
 
 if (results) {
 	// print times
