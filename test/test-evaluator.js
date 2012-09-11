@@ -96,13 +96,12 @@ vows.describe('Evaluator').addBatch({
 			assert.equal(type('8d 7d 6d 5d 4d 4s 4c'), Hand.Category.STRAIGHT_FLUSH);
 		},
 		'Less than royal flush': function() {
-			//assert.isTrue(value('8d 7d 6d 5d 4d 4s 4c') < value('Ac Kc Qc Jc 10c 9c 3c'));
+			assert.isTrue(value('8d 7d 6d 5d 4d 4s 4c') < value('Ac Kc Qc Jc 10c 9c 3c'));
 		},
 	},
 
 	'Royal Flush': {
 		'Correct type': function() {
-			console.log('---')
 			assert.equal(type('Ac Kc Qc Jc 10c 2h 4d'), Hand.Category.ROYAL_FLUSH);
 		},
 	},
