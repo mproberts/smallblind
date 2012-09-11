@@ -13,7 +13,7 @@ vows.describe('Card').addBatch({
 			assert.equal(card.suit, Card.Suit.SPADES);
 		},
 		'Invalid range for rank': function() {
-			Card.bind({}, 1, 1).should.throwError(/^Invalid/);
+			Card.bind({}, 0, 1).should.throwError(/^Invalid/);
 		},
 		'Invalid range for rank (upper)': function() {
 			Card.bind({}, 15, 1).should.throwError(/^Invalid/);
