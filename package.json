@@ -12,7 +12,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "vows": "0.6.x"
+    "vows": "0.6.x",
+    "should": "1.1.x"
   },
   "engines": {
     "node": ">= 0.4"
