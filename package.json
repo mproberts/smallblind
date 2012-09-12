@@ -10,6 +10,9 @@
     "type": "git",
     "url": "https://github.com/mproberts/node-smallblind.git"
   },
+  "dependencies": {
+    "vows": "vows"
+  },
   "keywords": [
     "poker",
     "cards",
