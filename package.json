@@ -4,7 +4,7 @@
   "description": "A light-weight poker library for NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "vows test/test-*.js"
+    "test": "vows --spec test/test-*.js"
   },
   "repository": {
     "type": "git",

@@ -3,6 +3,8 @@
 
 This library provides card handling, hand evaluation, table logic, betting rules, and more.
 
+[![Build Status](https://secure.travis-ci.org/mproberts/smallblind.png)](http://travis-ci.org/mproberts/smallblind)
+
 ## License
 
 Source code for _smallblind_ is Copyright © 2012 [Mike Roberts](mailto:mike@kik.com).
