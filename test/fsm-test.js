@@ -23,10 +23,10 @@ vows.describe('fsm').addBatch({
 
 			assert.isTrue(lights.is('green'));
 
-			lights.advance('stop');
+			lights.stop();
 			assert.isTrue(lights.is('yellow'));
 
-			lights.advance('timeout');
+			lights.timeout();
 			assert.isTrue(lights.is('red'));
 		}, 
 		'Do not transition if does not exist': function(lights) {
@@ -34,23 +34,23 @@ vows.describe('fsm').addBatch({
 
 			assert.isTrue(lights.is('green'));
 
-			lights.advance('ready');
+			lights.ready();
 			assert.isTrue(lights.is('green'));
 
-			lights.advance('timeout');
+			lights.timeout();
 			assert.isTrue(lights.is('green'));
 		},
 		'State events sent': function(lights) {
 			var args = null;
 
 			// bind to the transition event
-			lights.on('yellow', function() {
+			lights.on('state-yellow', function() {
 				args = Array.prototype.slice.apply(arguments);
 			});
 
 			lights.set('green');
 
-			lights.advance('stop', 1, 2, 3);
+			lights.stop(1, 2, 3);
 
 			assert.isTrue(lights.is('yellow'));
 			assert.deepEqual(args, ['stop', 1, 2, 3]);

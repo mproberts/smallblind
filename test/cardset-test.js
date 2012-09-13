@@ -86,6 +86,15 @@ vows.describe('CardSet').addBatch({
 		},
 	},
 
+	'Taking': {
+		'Grabs top in order': function() {
+			assert.deepEqual(CardSet('2c 6c 3c 4c').take(3), CardSet('2c 6c 3c'));
+		},
+		'Defaults to taking one card': function() {
+			assert.deepEqual(CardSet('2c 6c 3c 4c').take(1), CardSet('2c'));
+		},
+	},
+
 	'Index Of': {
 		'Index for existing card': function() {
 			assert.equal(CardSet('2c 3c').indexOf('3c'), 1);
