@@ -1,9 +1,9 @@
 #!/usr/bin/node
 
-var Card      = require('./lib/card'),
-    CardSet   = require('./lib/cardset'),
-    Hand      = require('./lib/hand'),
-    Evaluator = require('./lib/naive-evaluator');
+var Card      = require('../lib/card'),
+    CardSet   = require('../lib/cardset'),
+    Hand      = require('../lib/hand'),
+    Evaluator = require('../lib/naive-evaluator');
 
 var TRIALS = 1000;
 var pockets = process.argv.slice(2);
@@ -34,7 +34,7 @@ for (var i = 0; i < TRIALS; ++i) {
 	for (var h = 0; h < pockets.length; ++h) {
 		var handType;
 
-		hands[h] = pockets[h].copy().addAll(community);
+		hands[h] = pockets[h].copy().add(community);
 		values[h] = Evaluator.evaluate(hands[h]);
 		handType = Evaluator.handType(values[h]);
 
