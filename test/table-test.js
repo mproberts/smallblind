@@ -2,13 +2,25 @@ var vows   = require('vows'),
     should = require('should'),
     assert = require('assert');
 
-
 var CardSet = require('../lib/cardset'),
        Card = require('../lib/card'),
       Table = require('../lib/table');
 
+function countEvents(emitter, name) {
+	var fn = function() {
+		if (typeof(fn.count) === 'undefined') {
+			fn.count = 0;
+		}
+		fn.count += 1;
+	};
+
+	emitter.on(name, fn);
+
+	return fn;
+}
+
 vows.describe('Game Flow').addBatch({
-	'Setup': {
+	'Dealing': {
 		topic: function() {
 			var table = new Table();
 
@@ -31,7 +43,11 @@ vows.describe('Game Flow').addBatch({
 		'Hands dealt': function(table) {
 			table.reset();
 
-			table.deal();
+			var preFlopCount = countEvents(table, 'pre-flop');
+
+			table.nextPhase();
+
+			assert.equal(1, preFlopCount.count);
 
 			assert.equal(0, table.community.count());
 			assert.equal(2, table.playersInHand[0].hand.count());
@@ -42,8 +58,14 @@ vows.describe('Game Flow').addBatch({
 		'Flop dealt': function(table) {
 			table.reset();
 
-			table.deal();
-			table.deal();
+			var preFlopCount = countEvents(table, 'pre-flop');
+			var flopCount = countEvents(table, 'flop');
+			
+			table.nextPhase();
+			table.nextPhase();
+
+			assert.equal(1, preFlopCount.count);
+			assert.equal(1, flopCount.count);
 
 			assert.equal(3, table.community.count());
 			assert.equal(2, table.playersInHand[0].hand.count());
@@ -54,9 +76,17 @@ vows.describe('Game Flow').addBatch({
 		'Turn dealt': function(table) {
 			table.reset();
 
-			table.deal();
-			table.deal();
-			table.deal();
+			var preFlopCount = countEvents(table, 'pre-flop');
+			var flopCount = countEvents(table, 'flop');
+			var turnCount = countEvents(table, 'turn');
+			
+			table.nextPhase();
+			table.nextPhase();
+			table.nextPhase();
+
+			assert.equal(1, preFlopCount.count);
+			assert.equal(1, flopCount.count);
+			assert.equal(1, turnCount.count);
 
 			assert.equal(4, table.community.count());
 			assert.equal(2, table.playersInHand[0].hand.count());
@@ -67,15 +97,27 @@ vows.describe('Game Flow').addBatch({
 		'River dealt': function(table) {
 			table.reset();
 
-			table.deal();
-			table.deal();
-			table.deal();
-			table.deal();
+			var preFlopCount = countEvents(table, 'pre-flop');
+			var flopCount = countEvents(table, 'flop');
+			var turnCount = countEvents(table, 'turn');
+			var riverCount = countEvents(table, 'river');
+			
+			table.nextPhase();
+			table.nextPhase();
+			table.nextPhase();
+			table.nextPhase();
+
+			assert.equal(1, preFlopCount.count);
+			assert.equal(1, flopCount.count);
+			assert.equal(1, turnCount.count);
+			assert.equal(1, riverCount.count);
 
 			assert.equal(5, table.community.count());
 			assert.equal(2, table.playersInHand[0].hand.count());
 			assert.equal(2, table.playersInHand[1].hand.count());
 			assert.equal(2, table.playersInHand[2].hand.count());
 		},
+	}, 'Betting rounds': {
+		
 	}
 }).export(module);
