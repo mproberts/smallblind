@@ -45,7 +45,7 @@ vows.describe('Game Flow').addBatch({
 
 			var preFlopCount = countEvents(table, 'pre-flop');
 
-			table.nextPhase();
+			table.nextCards();
 
 			assert.equal(1, preFlopCount.count);
 
@@ -61,8 +61,8 @@ vows.describe('Game Flow').addBatch({
 			var preFlopCount = countEvents(table, 'pre-flop');
 			var flopCount = countEvents(table, 'flop');
 			
-			table.nextPhase();
-			table.nextPhase();
+			table.nextCards();
+			table.nextCards();
 
 			assert.equal(1, preFlopCount.count);
 			assert.equal(1, flopCount.count);
@@ -80,9 +80,9 @@ vows.describe('Game Flow').addBatch({
 			var flopCount = countEvents(table, 'flop');
 			var turnCount = countEvents(table, 'turn');
 			
-			table.nextPhase();
-			table.nextPhase();
-			table.nextPhase();
+			table.nextCards();
+			table.nextCards();
+			table.nextCards();
 
 			assert.equal(1, preFlopCount.count);
 			assert.equal(1, flopCount.count);
@@ -102,10 +102,10 @@ vows.describe('Game Flow').addBatch({
 			var turnCount = countEvents(table, 'turn');
 			var riverCount = countEvents(table, 'river');
 			
-			table.nextPhase();
-			table.nextPhase();
-			table.nextPhase();
-			table.nextPhase();
+			table.nextCards();
+			table.nextCards();
+			table.nextCards();
+			table.nextCards();
 
 			assert.equal(1, preFlopCount.count);
 			assert.equal(1, flopCount.count);
